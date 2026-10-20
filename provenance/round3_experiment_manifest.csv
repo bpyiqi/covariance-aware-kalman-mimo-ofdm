@@ -1,0 +1,8 @@
+experiment,status,seed,packets,configuration,evidence_or_output,notes
+source_hash_recovery,VERIFIED_COMPLETE,NA,NA,formal frozen manifest 20260721,source_candidates/frozen_manifest_snapshot_20260721;comparisons,exact blobs recovered from Git objects
+standard_estimator_behavior,VERIFIED_COMPLETE,deterministic,1,formal cfg methods,comparisons/frozen_behavioral_equivalence.csv,standard 3-argument path
+gram_only_smoke,VERIFIED_COMPLETE,deterministic,1,SNR20 fd200 payload169,03_GRAM_ONLY_ABLATION.md,code-validity smoke only
+residual_only_smoke,VERIFIED_COMPLETE,deterministic,1,SNR20 fd200 payload169,04_RESIDUAL_ONLY_DEFINITION.md,code-validity smoke only
+independent_seed_20,VERIFIED_COMPLETE,2026100901,20,SNR20 fd200 payload169,experiments/independent_seed_20261009,100 packet-method rows; 10000-replicate paired bootstrap
+independent_seed_final_statistics_audit,VERIFIED_COMPLETE,2026100901,20,read-only post-processing from existing packet CSV,experiments/independent_seed_20261009/independent_seed_paired_statistics_final.csv,21 paired rows including direct Proposed-Fixed audit
+formal_50_rerun,NOT_RUN,NA,50,not required for hash recovery,07_PHYSICAL_COMMUNICATION_GO_NO_GO.md,do not overwrite frozen results

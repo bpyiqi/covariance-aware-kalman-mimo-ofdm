@@ -1,0 +1,95 @@
+--- D:\matlabfile\C1_PhysicalCommunication_Clean\audit_three_layer_helpers\ojcd_baseline\auditOjcdTwoLayerSymbol.m
+
++++ D:\matlabfile\C1_PhysicalCommunication_Clean\c1_final_evidence_round3\source_candidates\auditOjcdTwoLayerSymbol_frozen_c696ab3a5ee944abc4192f0d7c9a95ccfa4f8495.m
+
+@@ -13,21 +13,19 @@
+
+     options.auditConditionNumbers (1,1) logical = true
+
+     options.forceNegativePrecisionIterationJcd1 (1,1) double = 0
+
+     options.forceNegativePrecisionIterationJcd2 (1,1) double = 0
+
+-    options.captureEpDiagnostics (1,1) logical = false
+
+ end
+
+ traditional=auditTraditionalLmmseEp(pilotCfr,covariance,noiseVar);
+
+ [D,~]=size(y); nt=size(traditional.Hdata,3);
+
+ validMask=options.validDataMask(:);assert(numel(validMask)==D,'validDataMask length mismatch.');
+
+-xhat=complex(zeros(D,nt)); variance=zeros(D,nt); llr1=zeros(D,nt,4);if options.captureEpDiagnostics,jcd1Diagnostics=cell(D,1);jcd2Diagnostics=cell(D,1);end
+
++xhat=complex(zeros(D,nt)); variance=zeros(D,nt); llr1=zeros(D,nt,4);
+
+ rollback1=0;candidate1=0;candidateByIteration1=zeros(options.epIterations,1);rollbackByIteration1=zeros(options.epIterations,1);candidateByStream1=zeros(nt,1);rollbackByStream1=zeros(nt,1);candidateMatrix1=zeros(options.epIterations,nt);rollbackMatrix1=zeros(options.epIterations,nt);
+
+ for k=find(validMask).'
+
+     ep=auditEpDetectorOjcd(y(k,:).',squeeze(traditional.Hdata(k,:,:)),noiseVar,constellation, ...
+
+-        T=options.epIterations,beta=options.epBeta,forceNegativePrecisionIteration=options.forceNegativePrecisionIterationJcd1,captureDiagnostic=options.captureEpDiagnostics);
+
++        T=options.epIterations,beta=options.epBeta,forceNegativePrecisionIteration=options.forceNegativePrecisionIterationJcd1);
+
+     xhat(k,:)=ep.posteriorMean.'; variance(k,:)=ep.posteriorVariance.';
+
+     llr1(k,:,:)=ep.bitLlr; rollback1=rollback1+ep.negativePrecisionRollbackCount;
+
+     candidate1=candidate1+ep.precisionCandidateCount;candidateByIteration1=candidateByIteration1+ep.precisionCandidateCountByIteration;rollbackByIteration1=rollbackByIteration1+ep.negativePrecisionRollbackCountByIteration;candidateByStream1=candidateByStream1+ep.precisionCandidateCountByStream;rollbackByStream1=rollbackByStream1+ep.negativePrecisionRollbackCountByStream;
+
+     candidateMatrix1=candidateMatrix1+double(ep.precisionCandidateMatrix);rollbackMatrix1=rollbackMatrix1+double(ep.negativeRollbackMatrix);
+
+-    if options.captureEpDiagnostics,jcd1Diagnostics{k}=ep.diagOut;end
+
+ end
+
+ validIndices=find(validMask);subset=subsetCovariance(covariance,validIndices);
+
+ ojcdSubset=auditOjcdLmmseEpAdapted(y(validIndices,:),traditional.Hdata(validIndices,:,:),xhat(validIndices,:),variance(validIndices,:),subset,noiseVar, ...
+
+@@ -36,12 +34,11 @@
+
+ llr2=zeros(D,nt,4); posterior2=complex(zeros(D,nt)); variance2=zeros(D,nt);rollback2=0;candidate2=0;candidateByIteration2=zeros(options.epIterations,1);rollbackByIteration2=zeros(options.epIterations,1);candidateByStream2=zeros(nt,1);rollbackByStream2=zeros(nt,1);candidateMatrix2=zeros(options.epIterations,nt);rollbackMatrix2=zeros(options.epIterations,nt);
+
+ for k=validIndices.'
+
+     ep=auditEpDetectorOjcd(y(k,:).',squeeze(ojcd.Hdata(k,:,:)),noiseVar,constellation, ...
+
+-        T=options.epIterations,beta=options.epBeta,forceNegativePrecisionIteration=options.forceNegativePrecisionIterationJcd2,captureDiagnostic=options.captureEpDiagnostics);
+
++        T=options.epIterations,beta=options.epBeta,forceNegativePrecisionIteration=options.forceNegativePrecisionIterationJcd2);
+
+     posterior2(k,:)=ep.posteriorMean.';variance2(k,:)=ep.posteriorVariance.';
+
+     llr2(k,:,:)=ep.bitLlr;rollback2=rollback2+ep.negativePrecisionRollbackCount;
+
+     candidate2=candidate2+ep.precisionCandidateCount;candidateByIteration2=candidateByIteration2+ep.precisionCandidateCountByIteration;rollbackByIteration2=rollbackByIteration2+ep.negativePrecisionRollbackCountByIteration;candidateByStream2=candidateByStream2+ep.precisionCandidateCountByStream;rollbackByStream2=rollbackByStream2+ep.negativePrecisionRollbackCountByStream;
+
+     candidateMatrix2=candidateMatrix2+double(ep.precisionCandidateMatrix);rollbackMatrix2=rollbackMatrix2+double(ep.negativeRollbackMatrix);
+
+-    if options.captureEpDiagnostics,jcd2Diagnostics{k}=ep.diagOut;end
+
+ end
+
+ result=struct('traditional',traditional,'ojcd',ojcd,'jcd1PosteriorMean',xhat, ...
+
+     'jcd1PosteriorVariance',variance,'jcd1ExtrinsicLlr',llr1, ...
+
+@@ -55,7 +52,6 @@
+
+     'precisionCandidateCountByStreamJcd2',candidateByStream2,'rollbackCountByStreamJcd2',rollbackByStream2, ...
+
+     'precisionCandidateCountByIterationStreamJcd1',candidateMatrix1,'rollbackCountByIterationStreamJcd1',rollbackMatrix1, ...
+
+     'precisionCandidateCountByIterationStreamJcd2',candidateMatrix2,'rollbackCountByIterationStreamJcd2',rollbackMatrix2);
+
+-if options.captureEpDiagnostics,result.jcd1EpDiagnostics=jcd1Diagnostics;result.jcd2EpDiagnostics=jcd2Diagnostics;end
+
+ end
+
+ 
+
+ function subset=subsetCovariance(covariance,indices)

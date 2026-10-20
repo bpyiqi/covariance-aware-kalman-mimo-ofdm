@@ -1,0 +1,9 @@
+function schema = auditQualityAwareMiniSchema()
+%AUDITQUALITYAWAREMINISCHEMA Required output columns for dry-run and Mini.
+hashes={'informationBitsHash','transmitBitsHash','codedBitsHash','qamSymbolsHash','paddingMaskHash','channelHash','noiseHash','receivedSignalHash','pilotObservationHash'};
+schema.packet=[{'payloadSymbols','nCodeword','packetIndex','method','csiNmse','preLdpcBer','blockErrorRate','codewordPassRate','passedCodewordCount','totalCodewordCount','payloadGoodputMbps','runtimeSeconds','hasNaN','hasInf','futureSymbolReadCount','testTruthOnlineUseCount','solverFailureCount'} hashes];
+schema.hash=[{'payloadSymbols','nCodeword','packetIndex','method','conditionSeed','packetSeed'} hashes];
+schema.mechanism={'payloadSymbols','packetIndex','method','selectedRadius1Count','selectedRadius2Count','selectedRadius3Count','radiusSelectionRate1','radiusSelectionRate2','radiusSelectionRate3','noCandidateCount','innovationRejectCount','candidateCountBeforeInnovation','candidateCountAfterInnovation','innovationRejectRate','meanRdaTrace','medianRdaTrace','p95RdaTrace','minimumRdaTrace','maximumRdaTrace','meanNormalizedNis','medianNormalizedNis','p95NormalizedNis','maximumNormalizedNis','meanDecisionInflation','medianDecisionInflation','p95DecisionInflation','meanNisInflation','p95NisInflation','eigenFloorAppliedCount','solverFailureCount','covarianceNonPsdCount','daUpdateCount','pilotUpdateCount'};
+schema.summary={'payloadSymbols','method','packetCount','meanCsiNmse','medianCsiNmse','meanPreLdpcBer','medianPreLdpcBer','totalCodewords','passedCodewords','codewordPassRate','meanPayloadGoodputMbps','meanRuntimeSeconds','medianRuntimeSeconds','hasNaNCount','hasInfCount','futureSymbolReadCountTotal','testTruthOnlineUseCountTotal'};
+schema.paired={'payloadSymbols','methodA','methodB','metric','pairedPacketCount','meanDelta','medianDelta','winCount','tieCount','lossCount'};
+end

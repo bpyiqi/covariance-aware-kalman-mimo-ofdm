@@ -1,0 +1,37 @@
+experimentName=covariance_aware_final_validation50
+validationSeed=20260721
+bootstrapSeed=2026072101
+MATLAB=24.1.0.2537033 (R2024a)
+timestamp=2026-07-21 14:22:05
+payloadSymbols=[169 507]
+packetCountPerCondition=50
+methods=BaseKalmanCausal_EP,FixedRadius3Causal_EP,CovarianceAwareLocalDAKalmanCausal_EP,OJCD_LMMSE_EP_Adapted,OracleDataAidedCausal_EP,PerfectCSI_EP
+fixedRadius=3
+candidateSet=[1 2 3]
+developmentSeed=20260720
+llrThreshold=2.5
+minEffectiveSamples=2
+gramRcondThreshold=0.001
+RDA=RLS
+NIS=false
+alpha_nis=false
+alpha_dec=false
+dynamicRadius=false
+Joseph=true
+paddingExcluded=true
+noSameSymbolFeedback=true
+maxDaUpdatesPerTarget=1
+stateOrder=Re(H11),Re(H21),Re(H12),Re(H22),Im(H11),Im(H21),Im(H12),Im(H22)
+covarianceVectorOrder=H11,H21,H12,H22
+complexTranspose=nonconjugate
+realMapping=0.5*[Re(C),-Im(C);Im(C),Re(C)]
+eigenFloor=absolute_and_relative_frozen_floor
+bootstrapCount=10000
+schemaVersion=2.0
+SHA256 74653a6ebdd24a929bea4f5d6a4080507db0d7ef1da7f7960987091c91273113 D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\Audit_ThreeLayer_Base_Oracle_Proposed.m
+SHA256 e6ced466293ad205d0312203994839e0de80c3636d8cf4891189139420a97517 D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\quality_aware_proposed\auditCovarianceAwareFinalValidation50.m
+SHA256 2d3b04cef562c192793407ca55295e304541465df42a2d079b319cb462c3cd89 D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\quality_aware_proposed\auditCovarianceAwareFinalValidation50RunCore.m
+SHA256 cf3291ac1d8bd967b4296cfa078deae8de1235a52a99f8450d1777c5ee637e45 D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\quality_aware_proposed\auditMechanismRunSingleEstimator.m
+SHA256 f8cbbf8aa99bf6387f5de5f4da417461157116108d0c33f0ce8fba43fb1f469b D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\ojcd_baseline\auditOjcdTwoLayerSymbol.m
+SHA256 ed7a5b9db37b6c566efe6b1ecdab60c2e52ebc77a98396035d5da1cfc81604bc D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\quality_aware_proposed\auditCovarianceAwareFinalValidation50Config.m
+SHA256 c711ab8f8072961787f6309157179a8c0070f2ba8bc4f82c31713ce2af3ee389 D:\matlabfile\SDR_Matlab_OFDM_802.11n-master\audit_three_layer_helpers\quality_aware_proposed\auditCovarianceAwareFinalValidation50Schema.m

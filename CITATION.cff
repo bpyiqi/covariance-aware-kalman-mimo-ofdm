@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite the associated Physical Communication article and this repository when using the released data or code. Author metadata and the final public repository URL must be completed by the authors before public release."
+title: "Covariance-Aware Data-Aided Kalman Channel Tracking Using Local LS Observations in Time-Varying MIMO-OFDM Systems"
+type: software
+version: "0.1.0"
+abstract: "Provenance-tracked MATLAB code, frozen results, figure source data, and publication figures for the C1 covariance-aware data-aided Kalman channel-tracking study."
+keywords:
+  - MIMO-OFDM
+  - Kalman channel tracking
+  - local least-squares observations
+  - covariance-aware estimation
+  - time-varying channels
+# Add authors, repository-code, date-released, and license after author approval.
+

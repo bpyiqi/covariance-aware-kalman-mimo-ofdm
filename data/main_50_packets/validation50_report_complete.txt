@@ -1,0 +1,97 @@
+# Covariance-Aware Validation50 Formal Results Report
+
+Generated offline from completed CSV artifacts; no channel packet or method was rerun.
+Experiment: covariance_aware_final_validation50 | validation seed: 20260721 | bootstrap seed: 2026072101 | rows: 600 | paired physical packets: 100
+Frozen method validation, not a tuning run. Radius=3, RDA=RLS, NIS/alpha/dynamic-radius disabled.
+
+## Integrity gates
+Pairing hashes: 100/100 pass. Future reads=0, ordinary truth leaks=0, solver failures=0, padding DA uses=0, same-symbol feedback=0.
+
+## Payload 169 OFDM symbols
+Base: NMSE -18.844 dB (0.013051), BER 0.031387, per-codeword success 46.0%, goodput 22.026 Mbps, soft EVM 0.1798, effective SINR 12.997 dB, runtime 2.127 s.
+CovarianceAware: NMSE -24.788 dB (0.00332035), BER 0.018238, per-codeword success 68.0%, goodput 32.560 Mbps, soft EVM 0.1089, effective SINR 15.465 dB, runtime 5.862 s.
+FixedR3: NMSE -22.269 dB (0.0059309), BER 0.019904, per-codeword success 62.0%, goodput 29.687 Mbps, soft EVM 0.1219, effective SINR 15.102 dB, runtime 5.084 s.
+OJCD: NMSE -21.218 dB (0.00755522), BER 0.026463, per-codeword success 42.0%, goodput 20.110 Mbps, soft EVM 0.1674, effective SINR 13.506 dB, runtime 4.881 s.
+Oracle: NMSE -24.064 dB (0.00392308), BER 0.014606, per-codeword success 76.0%, goodput 36.390 Mbps, soft EVM 0.0952, effective SINR 16.791 dB, runtime 2.273 s.
+PerfectCSI: NMSE -Inf dB (0), BER 0.0095154, per-codeword success 90.0%, goodput 43.093 Mbps, soft EVM 0.0635, effective SINR 18.863 dB, runtime 2.172 s.
+
+### CovarianceAware paired comparisons
+vs Base, avgCsiNmse: proposed 0.00332035, reference 0.013051, delta -0.00973064, 95% CI [-0.01099,-0.00851358], wins/ties/losses=50/0/0, relative improvement +74.56%.
+vs Base, whole-payload all-codewords pass: 68.0% vs 46.0%, difference +22.0 pp; both pass/fail=23/16, proposed-only/reference-only=11/0.
+vs Base, goodputMbps: proposed 32.5595, reference 22.0256, delta +10.534, 95% CI [+5.7458,+16.2798], wins/ties/losses=11/39/0, relative improvement +47.83%.
+vs Base, preLdpcBer: proposed 0.018238, reference 0.031387, delta -0.0131491, 95% CI [-0.0164312,-0.0100648], wins/ties/losses=50/0/0, relative improvement +41.89%.
+vs Base, softEvm: proposed 0.108871, reference 0.179827, delta -0.0709552, 95% CI [-0.0791176,-0.0632478], wins/ties/losses=50/0/0, relative improvement +39.46%.
+vs FixedR3, avgCsiNmse: proposed 0.00332035, reference 0.0059309, delta -0.00261055, 95% CI [-0.00309662,-0.00220486], wins/ties/losses=50/0/0, relative improvement +44.02%.
+vs FixedR3, whole-payload all-codewords pass: 68.0% vs 62.0%, difference +6.0 pp; both pass/fail=31/16, proposed-only/reference-only=3/0.
+vs FixedR3, goodputMbps: proposed 32.5595, reference 29.6866, delta +2.8729, 95% CI [+0,+6.70343], wins/ties/losses=3/47/0, relative improvement +9.68%.
+vs FixedR3, preLdpcBer: proposed 0.018238, reference 0.0199037, delta -0.00166574, 95% CI [-0.0024139,-0.000932091], wins/ties/losses=46/0/4, relative improvement +8.37%.
+vs FixedR3, softEvm: proposed 0.108871, reference 0.121868, delta -0.0129972, 95% CI [-0.0168173,-0.00928947], wins/ties/losses=46/0/4, relative improvement +10.66%.
+vs OJCD, avgCsiNmse: proposed 0.00332035, reference 0.00755522, delta -0.00423487, 95% CI [-0.00520717,-0.00326277], wins/ties/losses=48/0/2, relative improvement +56.05%.
+vs OJCD, whole-payload all-codewords pass: 68.0% vs 42.0%, difference +26.0 pp; both pass/fail=21/16, proposed-only/reference-only=13/0.
+vs OJCD, goodputMbps: proposed 32.5595, reference 20.1103, delta +12.4492, 95% CI [+6.70343,+18.195], wins/ties/losses=13/37/0, relative improvement +61.90%.
+vs OJCD, preLdpcBer: proposed 0.018238, reference 0.026463, delta -0.008225, 95% CI [-0.0118765,-0.00467172], wins/ties/losses=46/0/4, relative improvement +31.08%.
+vs OJCD, softEvm: proposed 0.108871, reference 0.167434, delta -0.0585628, 95% CI [-0.071134,-0.0452273], wins/ties/losses=46/0/4, relative improvement +34.98%.
+vs Oracle, avgCsiNmse: proposed 0.00332035, reference 0.00392308, delta -0.000602734, 95% CI [-0.00125415,+0.000142302], wins/ties/losses=40/0/10, relative improvement +15.36%.
+vs Oracle, whole-payload all-codewords pass: 68.0% vs 76.0%, difference -8.0 pp; both pass/fail=32/10, proposed-only/reference-only=2/6.
+vs Oracle, goodputMbps: proposed 32.5595, reference 36.3901, delta -3.83053, 95% CI [-8.6187,+0.957633], wins/ties/losses=2/42/6, relative improvement -10.53%.
+vs Oracle, preLdpcBer: proposed 0.018238, reference 0.0146062, delta +0.00363179, 95% CI [+0.00164352,+0.00616113], wins/ties/losses=19/0/31, relative improvement -24.86%.
+vs Oracle, softEvm: proposed 0.108871, reference 0.0951753, delta +0.013696, 95% CI [+0.00639566,+0.0217393], wins/ties/losses=19/0/31, relative improvement -14.39%.
+vs PerfectCSI, avgCsiNmse: proposed 0.00332035, reference 0, delta +0.00332035, 95% CI [+0.0022896,+0.00459614], wins/ties/losses=0/0/50, relative improvement NaN%.
+vs PerfectCSI, whole-payload all-codewords pass: 68.0% vs 90.0%, difference -22.0 pp; both pass/fail=34/5, proposed-only/reference-only=0/11.
+vs PerfectCSI, goodputMbps: proposed 32.5595, reference 43.0935, delta -10.534, 95% CI [-16.2798,-4.78817], wins/ties/losses=0/39/11, relative improvement -24.44%.
+vs PerfectCSI, preLdpcBer: proposed 0.018238, reference 0.00951543, delta +0.00872253, 95% CI [+0.00485636,+0.0132958], wins/ties/losses=0/2/48, relative improvement -91.67%.
+vs PerfectCSI, softEvm: proposed 0.108871, reference 0.063502, delta +0.0453693, 95% CI [+0.0333868,+0.0586131], wins/ties/losses=0/0/50, relative improvement -71.45%.
+
+## Payload 507 OFDM symbols
+Base: NMSE -18.608 dB (0.0137796), BER 0.031872, per-codeword success 52.0%, goodput 24.898 Mbps, soft EVM 0.1802, effective SINR 12.848 dB, runtime 6.567 s.
+CovarianceAware: NMSE -25.310 dB (0.00294425), BER 0.01822, per-codeword success 78.7%, goodput 37.667 Mbps, soft EVM 0.1044, effective SINR 15.390 dB, runtime 18.034 s.
+FixedR3: NMSE -22.453 dB (0.00568418), BER 0.019708, per-codeword success 75.3%, goodput 36.071 Mbps, soft EVM 0.1182, effective SINR 15.124 dB, runtime 15.637 s.
+OJCD: NMSE -20.503 dB (0.00890561), BER 0.028599, per-codeword success 48.7%, goodput 23.302 Mbps, soft EVM 0.1722, effective SINR 13.142 dB, runtime 15.220 s.
+Oracle: NMSE -23.802 dB (0.00416722), BER 0.015015, per-codeword success 78.0%, goodput 37.348 Mbps, soft EVM 0.0975, effective SINR 16.514 dB, runtime 6.866 s.
+PerfectCSI: NMSE -Inf dB (0), BER 0.0097568, per-codeword success 88.0%, goodput 42.136 Mbps, soft EVM 0.0673, effective SINR 18.553 dB, runtime 6.388 s.
+
+### CovarianceAware paired comparisons
+vs Base, avgCsiNmse: proposed 0.00294425, reference 0.0137796, delta -0.0108353, 95% CI [-0.0124069,-0.00936153], wins/ties/losses=50/0/0, relative improvement +78.63%.
+vs Base, whole-payload all-codewords pass: 74.0% vs 44.0%, difference +30.0 pp; both pass/fail=22/13, proposed-only/reference-only=15/0.
+vs Base, goodputMbps: proposed 37.6669, reference 24.8985, delta +12.7684, 95% CI [+7.98028,+17.8758], wins/ties/losses=20/30/0, relative improvement +51.28%.
+vs Base, preLdpcBer: proposed 0.0182204, reference 0.0318723, delta -0.0136519, 95% CI [-0.0172403,-0.010381], wins/ties/losses=50/0/0, relative improvement +42.83%.
+vs Base, softEvm: proposed 0.104371, reference 0.180217, delta -0.0758463, 95% CI [-0.0859361,-0.0662489], wins/ties/losses=50/0/0, relative improvement +42.09%.
+vs FixedR3, avgCsiNmse: proposed 0.00294425, reference 0.00568418, delta -0.00273992, 95% CI [-0.00320783,-0.00233373], wins/ties/losses=50/0/0, relative improvement +48.20%.
+vs FixedR3, whole-payload all-codewords pass: 74.0% vs 70.0%, difference +4.0 pp; both pass/fail=35/13, proposed-only/reference-only=2/0.
+vs FixedR3, goodputMbps: proposed 37.6669, reference 36.0709, delta +1.59606, 95% CI [-1.42109e-16,+3.51132], wins/ties/losses=5/44/1, relative improvement +4.42%.
+vs FixedR3, preLdpcBer: proposed 0.0182204, reference 0.0197081, delta -0.00148776, 95% CI [-0.00257371,-0.000370332], wins/ties/losses=47/0/3, relative improvement +7.55%.
+vs FixedR3, softEvm: proposed 0.104371, reference 0.118219, delta -0.0138487, 95% CI [-0.0188016,-0.00886771], wins/ties/losses=46/0/4, relative improvement +11.71%.
+vs OJCD, avgCsiNmse: proposed 0.00294425, reference 0.00890561, delta -0.00596136, 95% CI [-0.00781311,-0.00440782], wins/ties/losses=49/0/1, relative improvement +66.94%.
+vs OJCD, whole-payload all-codewords pass: 74.0% vs 36.0%, difference +38.0 pp; both pass/fail=18/13, proposed-only/reference-only=19/0.
+vs OJCD, goodputMbps: proposed 37.6669, reference 23.3024, delta +14.3645, 95% CI [+9.25712,+19.4719], wins/ties/losses=24/25/1, relative improvement +61.64%.
+vs OJCD, preLdpcBer: proposed 0.0182204, reference 0.0285986, delta -0.0103782, 95% CI [-0.0143236,-0.00693661], wins/ties/losses=47/0/3, relative improvement +36.29%.
+vs OJCD, softEvm: proposed 0.104371, reference 0.172217, delta -0.0678463, 95% CI [-0.0794134,-0.0559063], wins/ties/losses=47/0/3, relative improvement +39.40%.
+vs Oracle, avgCsiNmse: proposed 0.00294425, reference 0.00416722, delta -0.00122297, 95% CI [-0.00181683,-0.000548841], wins/ties/losses=40/0/10, relative improvement +29.35%.
+vs Oracle, whole-payload all-codewords pass: 74.0% vs 74.0%, difference +0.0 pp; both pass/fail=37/13, proposed-only/reference-only=0/0.
+vs Oracle, goodputMbps: proposed 37.6669, reference 37.3477, delta +0.319211, 95% CI [-1.59606,+2.23448], wins/ties/losses=3/44/3, relative improvement +0.85%.
+vs Oracle, preLdpcBer: proposed 0.0182204, reference 0.0150153, delta +0.00320504, 95% CI [+0.000836608,+0.00616402], wins/ties/losses=28/0/22, relative improvement -21.35%.
+vs Oracle, softEvm: proposed 0.104371, reference 0.0975415, delta +0.00682913, 95% CI [-0.000184498,+0.0147554], wins/ties/losses=28/0/22, relative improvement -7.00%.
+vs PerfectCSI, avgCsiNmse: proposed 0.00294425, reference 0, delta +0.00294425, 95% CI [+0.00217645,+0.0038293], wins/ties/losses=0/0/50, relative improvement NaN%.
+vs PerfectCSI, whole-payload all-codewords pass: 74.0% vs 84.0%, difference -10.0 pp; both pass/fail=37/8, proposed-only/reference-only=0/5.
+vs PerfectCSI, goodputMbps: proposed 37.6669, reference 42.1359, delta -4.46896, 95% CI [-7.98028,-1.59606], wins/ties/losses=0/43/7, relative improvement -10.61%.
+vs PerfectCSI, preLdpcBer: proposed 0.0182204, reference 0.00975679, delta +0.00846358, 95% CI [+0.00430866,+0.0134954], wins/ties/losses=0/1/49, relative improvement -86.75%.
+vs PerfectCSI, softEvm: proposed 0.104371, reference 0.0673041, delta +0.0370665, 95% CI [+0.0262969,+0.0495691], wins/ties/losses=0/0/50, relative improvement -55.07%.
+
+## Runtime and RLS audit
+Payload 169: runtime 5.862 s (2.76x Base, 1.15x FixedR3); mean accepted DA 8096.3, fallback 3.7, mean RLS trace 0.0357108, minimum RLS eigenvalue 0.000259341, maximum RLS condition 223.002.
+Payload 507: runtime 18.034 s (2.75x Base, 1.15x FixedR3); mean accepted DA 24294.2, fallback 5.8, mean RLS trace 0.0386653, minimum RLS eigenvalue 0.000280859, maximum RLS condition 262.506.
+
+## Statistical interpretation
+Paired statistics rows=100; bootstrap rows=180; bootstrap resamples=10000 per continuous comparison. Confidence intervals resample physical packet pairs within each payload condition.
+Negative deltas favor CovarianceAware for NMSE, BER, EVM, and runtime; positive deltas favor it for goodput. CI crossing zero indicates that a stable directional difference is not established by this 50-packet validation.
+
+## Result synthesis
+Payload 169: CovarianceAware reduced mean NMSE by 74.56% vs Base and 44.02% vs FixedR3; both paired NMSE CIs exclude zero. It reduced BER by 31.08% vs OJCD. Its goodput gain vs FixedR3 was 9.68% with CI [+0,+6.703], so the goodput evidence should be interpreted using that interval rather than the point estimate alone.
+Payload 507: CovarianceAware reduced mean NMSE by 78.63% vs Base and 48.20% vs FixedR3; both paired NMSE CIs exclude zero. It reduced BER by 36.29% vs OJCD. Its goodput gain vs FixedR3 was 4.42% with CI [-1.421e-16,+3.511], so the goodput evidence should be interpreted using that interval rather than the point estimate alone.
+
+## EVM and decoding definitions
+softEvm is RMS symbol error normalized by true-symbol energy. Effective SINR is 10*log10(1/mean(softEvm^2)); packet-level dB values are not arithmetically averaged.
+In the summary, codewordPassRate is the success fraction over decoded codewords. In paired binary comparisons, codewordPass means that every codeword in the payload passed. The one- and three-codeword conditions must not be treated as identical packet-pass trials.
+
+## Limitations
+postLdpcBer is unavailable from the frozen receiver interface and remains NaN. Oracle uses authorized true QAM for its local-LS reference; PerfectCSI uses authorized true channel state. Results are simulated frozen-condition evidence, not real-flight range or universal SOTA claims.

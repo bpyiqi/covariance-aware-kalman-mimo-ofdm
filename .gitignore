@@ -1,0 +1,23 @@
+# MATLAB and editor-generated files
+*.asv
+*.autosave
+*.m~
+*.log
+*.lock
+*.slxc
+*.mex*
+
+# Local execution outputs and temporary QA renders
+provenance/local_*
+figures/_qa_*
+
+# Operating-system metadata
+Thumbs.db
+.DS_Store
+
+# Local credentials and private configuration
+.env
+*.pem
+*.key
+id_rsa*
+

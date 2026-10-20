@@ -1,0 +1,6 @@
+test_id,status,details
+target_creation,PASS,"Target was absent before creation; no overwrite."
+copy_integrity,PASS,"Retained files copied and hashed."
+matlab_isolation,PASS,"which() paths resolved inside clean root; see matlab_isolation_log.txt."
+matlab_selftests,NOT_RUN,"Requires MATLAB and declared toolboxes."
+mainline_smoke,NOT_RUN,"Formal 50-pack intentionally not run."

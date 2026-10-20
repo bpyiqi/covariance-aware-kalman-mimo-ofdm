@@ -1,0 +1,43 @@
+current=D:\matlabfile\C1_PhysicalCommunication_Clean\audit_three_layer_helpers\quality_aware_proposed\auditMechanismRunSingleEstimator.m\ncurrent_sha256=03451DF4A5EEE32E5EC71169A6490D31999C9434DD5C1AEF38B10D6A0CF935FB\ncurrent_bytes=11058\ncurrent_lines=76\n\ncandidate=D:\matlabfile\C1_PhysicalCommunication_Clean\c1_final_evidence_round3\source_candidates\auditMechanismRunSingleEstimator_frozen_ddf89f3e25d87f602e939b1899fbf1a287ee8df8.m\ncandidate_sha256=CF3291AC1D8BD967B4296CFA078DEAE8DE1235A52A99F8450D1777C5EE637E45\ncandidate_bytes=9788\ncandidate_lines=69\ndiff_changed_lines=13\ndiff_noncomment_lines=12\nclassification=behavioral_or_structural_difference_requires_review\n\n--- unified diff ---\n--- D:\matlabfile\C1_PhysicalCommunication_Clean\audit_three_layer_helpers\quality_aware_proposed\auditMechanismRunSingleEstimator.m
+\n+++ D:\matlabfile\C1_PhysicalCommunication_Clean\c1_final_evidence_round3\source_candidates\auditMechanismRunSingleEstimator_frozen_ddf89f3e25d87f602e939b1899fbf1a287ee8df8.m
+\n@@ -1,24 +1,21 @@
+\n-function result = auditMechanismRunSingleEstimator(cfg,online,method,options)
+\n+function result = auditMechanismRunSingleEstimator(cfg,online,method)
+\n %AUDITMECHANISMRUNSINGLEESTIMATOR One causal state chain, no online truth.
+\n-if nargin<4,options=struct();end;if ~isfield(options,'bypassCapture'),options.bypassCapture=false;end
+\n required={'pilotObservation','receivedData','validDataMask','noiseVar','rho'};missing=setdiff(required,fieldnames(online));assert(isempty(missing),'Estimator online packet is missing fields: %s.',strjoin(missing,', '));
+\n K=cfg.NFFT;N=size(online.pilotObservation,2);D=numel(cfg.data);F=cfg.stateDimension;timer=tic;
+\n features=reshape(permute(single(ofdm.complexToFeatures(online.pilotObservation)),[1 3 2]),K*F,N);variance=max(mean(double(features).^2,2),1e-5);Q=max(1-online.rho^2,1e-8).*variance;Rpilot=max(online.noiseVar/2,1e-8);
+\n state=double(features(:,1));P=zeros(K,F,F);for k=1:K,index=k+(0:F-1)*K;P(k,:,:)=diag(variance(index)+Rpilot);end
+\n-Hhat=complex(zeros(K,N,2,2,'single'));Hhat(:,1,:,:)=online.pilotObservation(:,1,:,:);audit=localAudit(D*N);if options.bypassCapture,capture=localBypass(D,N);end
+\n+Hhat=complex(zeros(K,N,2,2,'single'));Hhat(:,1,:,:)=online.pilotObservation(:,1,:,:);audit=localAudit(D*N);
+\n for n=1:N
+\n     if n>1
+\n         for k=1:K,index=k+(0:F-1)*K;prior=squeeze(P(k,:,:));predicted=online.rho*state(index);predictedP=online.rho^2*prior+diag(Q(index));gain=predictedP/(predictedP+Rpilot*eye(F));state(index)=predicted+gain*(double(features(index,n))-predicted);A=eye(F)-gain;post=A*predictedP*A'+gain*(Rpilot*eye(F))*gain';P(k,:,:)=(post+post')/2;end
+\n         Hhat(:,n,:,:)=ofdm.featuresToComplex(permute(reshape(single(state),K,F),[1 3 2]));audit.pilotUpdateCount=audit.pilotUpdateCount+D;
+\n     end
+\n-    if options.bypassCapture,capture.captureSymbolIndex(:,n)=n;capture.captureSubcarrierIndex(:,n)=cfg.data(:);for target=1:D,subcarrier=cfg.data(target);capture.HhatPilotFrozen{target,n}=Hhat(subcarrier,n,:,:);capture.PrealPilotFrozen{target,n}=squeeze(P(subcarrier,:,:));end,end
+\n     if method=="BaseKalmanCausal_EP",continue;end
+\n     frozen=Hhat(:,n,:,:);[X,L]=localDecisions(frozen,online.receivedData(:,n,:),cfg);Y=squeeze(online.receivedData(:,n,:)).';pilotState=state;pilotCovariance=P;
+\n     for target=1:D
+\n         if ~online.validDataMask(target,n),continue;end
+\n         subcarrier=cfg.data(target);index=subcarrier+(0:F-1)*K;hPilot=pilotState(index);PPilot=squeeze(pilotCovariance(subcarrier,:,:));
+\n         [selection,mechanismAudit,reasons]=localSelection(method,X,Y,L,target,online.validDataMask(:,n),hPilot,PPilot,Rpilot,cfg);
+\n-        if options.bypassCapture,capture.stream{target,n}=1:2;capture.subcarrier{target,n}=cfg.data(target);capture.symbol{target,n}=n;capture.paddingMask{target,n}=~online.validDataMask(:,n);capture.validDataMask{target,n}=online.validDataMask(:,n);capture.reliabilityMask{target,n}=squeeze(min(min(L,[],1),[],2))>0;capture.candidateMask{target,n}=~mechanismAudit.hardRejected;capture.selectedCandidateMask{target,n}=selection.accepted;end
+\n         audit=localReasons(audit,reasons);
+\n         if mechanismAudit.hardRejected,audit.noCandidateCount=audit.noCandidateCount+1;continue;end
+\n         if ~selection.accepted,audit.noCandidateCount=audit.noCandidateCount+1;continue;end
+\n@@ -27,11 +24,7 @@
+\n     end
+\n end
+\n result=struct('Hhat',Hhat,'onlineEstimationRuntimeSeconds',toc(timer),'audit',localFinalize(audit), ...
+\n-    'futureSymbolReadCount',0,'testTruthOnlineUseCount',0,'finalState',state,'finalCovariance',P);if options.bypassCapture,result.bypassCapture=capture;end
+\n-end
+\n-
+\n-function c=localBypass(D,N)
+\n-fields={'HhatPilotFrozen','PrealPilotFrozen','stream','subcarrier','symbol','paddingMask','validDataMask','reliabilityMask','candidateMask','selectedCandidateMask'};c=struct();for i=1:numel(fields),c.(fields{i})=cell(D,N);end;c.captureSymbolIndex=zeros(D,N);c.captureSubcarrierIndex=zeros(D,N);
+\n+    'futureSymbolReadCount',0,'testTruthOnlineUseCount',0,'finalState',state,'finalCovariance',P);
+\n end
+\n 
+\n function [X,L]=localDecisions(Hseed,ySlice,cfg)
+\n

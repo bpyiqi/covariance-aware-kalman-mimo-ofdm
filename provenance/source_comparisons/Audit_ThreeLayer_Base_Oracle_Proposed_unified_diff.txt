@@ -1,0 +1,273 @@
+--- D:\matlabfile\C1_PhysicalCommunication_Clean\Audit_ThreeLayer_Base_Oracle_Proposed.m
+
++++ D:\matlabfile\C1_PhysicalCommunication_Clean\c1_final_evidence_round3\source_candidates\Audit_ThreeLayer_Base_Oracle_Proposed_frozen_d8e1c41053b4583eab92282cd74aa66cf4162c09.m
+
+@@ -2,39 +2,9 @@
+
+ %% Audit_ThreeLayer_Base_Oracle_Proposed
+
+ % Stage 1 only: 20-packet paired smoke test, then stop. Original programs
+
+ % are never modified. Set THREE_LAYER_FORMAL=1 only after reviewing smoke.
+
+-if nargin > 0 && startsWith(string(mode), "uncertainty_propagation_")
+
+-    root=fileparts(mfilename('fullpath'));
+
+-    addpath(fullfile(root,'audit_three_layer_helpers'));
+
+-    addpath(fullfile(root,'audit_three_layer_helpers','uncertainty_consistent'));
+
+-    switch string(mode)
+
+-        case "uncertainty_propagation_bypass_capture"
+
+-            auditUncertaintyBypassCapture(root,'dryrun');
+
+-        case "uncertainty_propagation_bypass_capture_selftest"
+
+-            auditUncertaintyBypassCaptureSelftest(root);
+
+-        case "uncertainty_propagation_bypass_capture_mini_run"
+
+-            auditUncertaintyBypassCapture(root,'mini');
+
+-        case "uncertainty_propagation_capture_mini_dataset_v1"
+
+-            auditUncertaintyCaptureMiniDataset(root,'dryrun');
+
+-        case "uncertainty_propagation_capture_mini_dataset_v1_selftest"
+
+-            auditUncertaintyCaptureMiniDataset(root,'selftest');
+
+-        case "uncertainty_propagation_capture_mini_dataset_v1_run"
+
+-            auditUncertaintyCaptureMiniDataset(root,'run');
+
+-        case "uncertainty_propagation_core"
+
+-            fprintf('uncertainty propagation core v1 dry-run\nreceiverRuns=0\nphysicalSeeds=0\n');
+
+-            fprintf('Helper directory: %s\n',fullfile(root,'audit_three_layer_helpers','uncertainty_consistent'));
+
+-        case "uncertainty_propagation_core_selftest"
+
+-            ucUncertaintyPropagationSelftest(root);
+
+-        case "uncertainty_propagation_capture_audit"
+
+-            ucCaptureAvailabilityAudit(root);
+
+-        otherwise
+
+-            error('Unknown uncertainty-propagation mode: %s',mode);
+
+-    end
+
+-    return;
+
+-end
+
+ if nargin > 0 && (startsWith(string(mode), "quality_aware_proposed_") || ...
+
+         startsWith(string(mode), "quality_aware_mechanism_") || ...
+
+-        startsWith(string(mode), "covariance_aware_") || ...
+
+-        startsWith(string(mode), "decoder_confidence_"))
+
++        startsWith(string(mode), "covariance_aware_"))
+
+     root=fileparts(mfilename('fullpath'));
+
+     addpath(fullfile(root,'src'));
+
+     addpath(fullfile(root,'audit_three_layer_helpers'));
+
+@@ -63,93 +33,6 @@
+
+             auditCovarianceAwareFinalValidation50Smoke(root);
+
+         case "covariance_aware_final_validation50_resume_selftest"
+
+             auditCovarianceAwareFinalResumeSelftest(root);
+
+-        case "covariance_aware_final_validation50_report"
+
+-            auditBuildCovarianceAwareValidation50Report(root);
+
+-        case "covariance_aware_validation50_postprocess"
+
+-            auditCovarianceAwareValidation50Postprocess(root);
+
+-        case "covariance_aware_snr_localization10"
+
+-            auditCovarianceAwareSnrLocalization10(root);
+
+-        case "covariance_aware_snr_localization10_run"
+
+-            auditCovarianceAwareSnrLocalization10(root,'dryRun',false,'resume',false);
+
+-        case "covariance_aware_snr_localization10_resume"
+
+-            auditCovarianceAwareSnrLocalization10(root,'dryRun',false,'resume',true);
+
+-        case "covariance_aware_snr_localization10_artifact_smoke"
+
+-            auditCovarianceAwareSnrLocalization10Smoke(root);
+
+-        case "covariance_aware_snr_localization10_resume_selftest"
+
+-            auditCovarianceAwareSnrLocalization10ResumeSelftest(root);
+
+-        case "covariance_aware_snr_paired_localization20"
+
+-            auditCovarianceAwareSnrPairedLocalization20(root);
+
+-        case "covariance_aware_snr_paired_localization20_run"
+
+-            auditCovarianceAwareSnrPairedLocalization20(root,'dryRun',false,'resume',false);
+
+-        case "covariance_aware_snr_paired_localization20_resume"
+
+-            auditCovarianceAwareSnrPairedLocalization20(root,'dryRun',false,'resume',true);
+
+-        case "covariance_aware_snr_paired_localization20_artifact_smoke"
+
+-            auditCovarianceAwareSnrPairedLocalization20Smoke(root);
+
+-        case "covariance_aware_snr_paired_localization20_selftest"
+
+-            auditCovarianceAwareSnrPairedLocalization20Selftest(root);
+
+-        case "covariance_aware_snr_localization10_readonly_audit"
+
+-            auditCovarianceAwareSnrLocalization10ReadonlyAudit(root);
+
+-        case "covariance_aware_llr_ldpc_existing_results_audit"
+
+-            auditLlrLdpcExistingResultsAudit(root);
+
+-        case "covariance_aware_llr_ldpc_selftest"
+
+-            auditLlrLdpcSelftest(root);
+
+-        case "covariance_aware_llr_ldpc_replay_smoke"
+
+-            auditLlrLdpcReplaySmoke(root);
+
+-        case "decoder_confidence_temperature_calibration_dev12"
+
+-            auditDecoderConfidenceCalibrationDev12(root);
+
+-        case "decoder_confidence_temperature_calibration_dev12_artifact_smoke"
+
+-            auditDecoderConfidenceCalibrationSmoke(root);
+
+-        case "decoder_confidence_temperature_calibration_dev12_selftest"
+
+-            auditDecoderConfidenceCalibrationSelftest(root);
+
+-        case "decoder_confidence_temperature_calibration_dev12_run"
+
+-            auditDecoderConfidenceCalibrationDev12(root,'dryRun',false,'resume',false);
+
+-        case "decoder_confidence_temperature_calibration_dev12_resume"
+
+-            auditDecoderConfidenceCalibrationDev12(root,'dryRun',false,'resume',true);
+
+-        case "decoder_confidence_raw_clipping_dev12"
+
+-            rehash path;clear auditRawClipDev12 auditRawClipCalibrationSummary;
+
+-            auditRawClipDev12(root);
+
+-        case "decoder_confidence_raw_clipping_dev12_run"
+
+-            rehash path;clear auditRawClipDev12 auditRawClipCalibrationSummary;
+
+-            auditRawClipDev12(root,'run',true);
+
+-        case "decoder_confidence_raw_clipping_dev12_selftest"
+
+-            rehash path;clear auditRawClipSelftest auditRawClipCalibrationSummary;
+
+-            auditRawClipSelftest(root);
+
+-        case "decoder_confidence_ep_reliability_audit"
+
+-            rehash path;clear auditEpReliabilityAudit auditEpReliabilityPreflight;
+
+-            auditEpReliabilityAudit(root);
+
+-        case "decoder_confidence_ep_reliability_audit_selftest"
+
+-            rehash path;clear auditEpReliabilitySelftest auditEpReliabilityPreflight;
+
+-            auditEpReliabilitySelftest(root);
+
+-        case "decoder_confidence_ep_reliability_audit_run"
+
+-            rehash path;clear auditEpReliabilityAudit auditEpReliabilityPreflight;
+
+-            auditEpReliabilityAudit(root,'run',true);
+
+-        case "decoder_confidence_ep_variance_replay45"
+
+-            rehash path;clear auditEpVarianceReplay45 auditEpDetectorOjcd;
+
+-            auditEpVarianceReplay45(root);
+
+-        case "decoder_confidence_ep_variance_replay45_selftest"
+
+-            rehash path;clear auditEpVarianceReplay45Selftest auditEpDetectorOjcd;
+
+-            auditEpVarianceReplay45Selftest(root);
+
+-        case "decoder_confidence_ep_variance_replay45_run"
+
+-            rehash path;clear auditEpVarianceReplay45 auditEpDetectorOjcd;
+
+-            auditEpVarianceReplay45(root,'run',true);
+
+-        case "decoder_confidence_ep_variance_postprocess_v2"
+
+-            rehash path;clear auditEpVariancePostprocessV2 auditEpVariancePostprocessV2Aggregate;
+
+-            auditEpVariancePostprocessV2(root);
+
+-        case "decoder_confidence_ep_variance_postprocess_v2_selftest"
+
+-            rehash path;clear auditEpVariancePostprocessV2Selftest auditEpVariancePostprocessV2Aggregate;
+
+-            auditEpVariancePostprocessV2Selftest(root);
+
+-        case "decoder_confidence_ep_variance_postprocess_v2_run"
+
+-            rehash path;clear auditEpVariancePostprocessV2 auditEpVariancePostprocessV2Aggregate;
+
+-            auditEpVariancePostprocessV2(root,'run',true);
+
+-        case "decoder_confidence_ep_variance_mechanism_summary"
+
+-            rehash path;clear auditEpVarianceMechanismSummary auditEpVarianceMechanismSummaryBuild;
+
+-            auditEpVarianceMechanismSummary(root);
+
+-        case "decoder_confidence_ep_variance_mechanism_summary_selftest"
+
+-            rehash path;clear auditEpVarianceMechanismSummarySelftest auditEpVarianceMechanismSummaryBuild;
+
+-            auditEpVarianceMechanismSummarySelftest(root);
+
+-        case "decoder_confidence_ep_variance_mechanism_summary_run"
+
+-            rehash path;clear auditEpVarianceMechanismSummary auditEpVarianceMechanismSummaryBuild;
+
+-            auditEpVarianceMechanismSummary(root,'run',true);
+
+         case "covariance_aware_final_selftest"
+
+             auditCovarianceAwareFinalSelftest(root);
+
+         otherwise

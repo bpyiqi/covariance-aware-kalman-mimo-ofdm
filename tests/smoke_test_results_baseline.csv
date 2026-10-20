@@ -1,0 +1,10 @@
+test_id,status,details
+target_creation,PASS,"Target was absent before creation; no overwrite."
+copy_integrity,PASS,"Retained files copied and hashed."
+matlab_isolation,PASS,"which() paths resolved inside clean root; see matlab_isolation_log.txt."
+matlab_selftests,PASS,"quality-aware 27/27; mechanism 41/41; covariance final 8/8; OJCD deterministic; paired localization checkpoint/resume; LLR/LDPC core gates passed."
+configuration_and_dryrun,PASS,"validation50 dry-run: 6 methods, 600 expected rows, 0 random packets; default config finite and covariance cache present."
+static_dependency_closure,PASS,"matlab.codetools.requiredFilesAndProducts returned 201 files; all user-source paths resolved inside clean root, external paths were MATLAB/toolbox paths only."
+mainline_smoke,PASS,"One-packet validation smoke: 6 method rows, seed 20260722, temporary output, finite primary metrics and PSD audit passed."
+original_clean_same_seed,PASS,"Original and clean one-packet smoke both returned 6 rows; NMSE sum 0.06321030855178833 and Pre-LDPC BER sum 0.27003086419753086 matched exactly. Original was read-only during comparison."
+formal_50_packet_run,NOT_RUN,"Intentionally not run during cleanup."
